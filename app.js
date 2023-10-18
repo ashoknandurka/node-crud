@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const userRouter = require('./routes/UserRoutes');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const mongoURI = process.env.MONGODB_URI;
 
 app.use(express.json());
@@ -11,7 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRouter)
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
+mongoose.connect(
+  // mongoURI, 
+  "mongodb://root:example@localhost:27017",
+  {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -22,22 +26,6 @@ mongoose.connect(mongoURI, {
     console.error('Error connecting to MongoDB:', err);
   });
 
-// // Define a simple route
-// app.get('/', (req, res) => {
-//   res.send('Hello, World!');
-// });
-
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.post('/data', (req, res) => {
-//   console.log("called /data api")
-//   // const payload = req
-//   // console.log("payload : ", payload)
-//   const data = req.body
-//   console.log("data is ", data)
-// })
 
 // Start the server
 app.listen(port, () => {
