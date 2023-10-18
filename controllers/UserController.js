@@ -29,7 +29,7 @@ exports.findUserById = async (req,res) =>{
 
 exports.updateUser = async (req, res) =>{
     try{
-         let user = await userService.UpdateUser(req.params.id);
+         let user = await userService.UpdateUser(req.params.id, req.body);
          res.json({data:user, status:"success"});
     }catch(err){
         res.status(500).json({ error: err.message });
